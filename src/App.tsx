@@ -1,8 +1,11 @@
 import * as React from 'react'
+import { Route, Switch, BrowserRouter as Router } from 'react-router-dom'
 import { Query } from 'react-apollo'
 import { Drawer, List, NavBar, Icon } from 'antd-mobile'
 
 import { getLoginUser as QUERY } from './querys/index'
+
+import routes from './routes/index'
 
 interface Data {
     currency: string | number
@@ -10,41 +13,16 @@ interface Data {
 }
 
 const App = () => {
-    const getNav = () => {
-        return (
-            <NavBar
-                mode="light"
-                // icon={<Icon type="left" />}
-                // onLeftClick={() => console.log('onLeftClick')}
-                rightContent={[
-                    <Icon
-                        key="search"
-                        type="search"
-                        style={{ marginRight: '16px' }}
-                    />,
-                    <Icon key="ellipsis" type="ellipsis" />
-                ]}
-            >
-                Github
-            </NavBar>
-        )
-    }
-
-    const content = () => {
-        return <React.Fragment>{getNav()}</React.Fragment>
-    }
-
     return (
-        <Query
-            query={QUERY}
-            // variables={{currency: "USD"}}
-        >
-            {({ loading, error, data }) => {
-                if (loading) return <p>Loading...</p>
-                if (error) return <p>Error :(</p>
-                return content()
-            }}
-        </Query>
+        <Router>
+            <Switch>
+                {routes.map(route => {
+                    return (
+                        <Route key={route.name} path={route.path} component={route.component} />
+                    )
+                })}
+            </Switch>
+        </Router>
     )
 }
 

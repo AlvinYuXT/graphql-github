@@ -1,14 +1,5 @@
 import gql from 'graphql-tag'
 
-export const getRates = gql`
-    query getRates($currency: String!) {
-        rates(currency: $currency) {
-            currency
-            rate
-        }
-    }
-`
-
 export const getLoginUser = gql`
     query {
         viewer {
@@ -16,3 +7,18 @@ export const getLoginUser = gql`
         }
     }
 `
+
+export const test = gql`
+    query {
+        viewer {
+            login
+            repositories(last: 10) {
+                nodes {
+                    description
+                }
+            }
+        }
+    }
+`
+
+// export const getRepos = gql``

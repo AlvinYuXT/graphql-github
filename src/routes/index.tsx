@@ -1,11 +1,10 @@
 import * as React from 'react'
 import Loadable from 'react-loadable'
+import Loading from '@/components/Loading/index'
 
 const AsyncIndex = Loadable({
     loader: () => import('../containers/Index/index'),
-    loading() {
-        return <div>Loading...</div>
-    }
+    loading: Loading,
 })
 
 const AsyncMy = Loadable({

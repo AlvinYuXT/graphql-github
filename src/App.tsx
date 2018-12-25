@@ -1,9 +1,6 @@
 import * as React from 'react'
 import { Route, Switch, BrowserRouter as Router } from 'react-router-dom'
-import { Query } from 'react-apollo'
-import { Drawer, List, NavBar, Icon } from 'antd-mobile'
 
-import { getLoginUser as QUERY } from './querys/index'
 
 import routes from './routes/index'
 

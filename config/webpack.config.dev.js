@@ -1,5 +1,3 @@
-'use strict';
-
 const fs = require('fs');
 const path = require('path');
 const resolve = require('resolve');
@@ -221,6 +219,15 @@ module.exports = {
               ),
               
               plugins: [
+                ["react-css-modules", {
+                  "context": "./",
+                  "generateScopedName": "[local]-[hash:base64:15]",
+                  "filetypes": {
+                    ".scss": {
+                      "syntax": "postcss-scss"
+                    }
+                  }
+                }],
                 ["import", { libraryName: "antd-mobile", style: "css" }],
                 [
                   require.resolve('babel-plugin-named-asset-import'),
@@ -299,7 +306,7 @@ module.exports = {
           {
             test: sassRegex,
             exclude: sassModuleRegex,
-            use: getStyleLoaders({ importLoaders: 2 }, 'sass-loader'),
+            use: getStyleLoaders({ importLoaders: 2,modules: true, localIdentName: "[local]-[hash:base64:15]", }, 'sass-loader'),
           },
           // Adds support for CSS Modules, but using SASS
           // using the extension .module.scss or .module.sass

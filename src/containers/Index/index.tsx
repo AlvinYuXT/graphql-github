@@ -1,10 +1,10 @@
 import * as React from 'react'
 import { Query } from 'react-apollo'
-// import { NavBar, Icon } from 'antd-mobile'
+import { Toast } from 'antd-mobile'
 
-import { getLoginUser as QUERY } from '../../querys/index'
+import { test as QUERY } from '../../querys/index'
 import Navbar from '@/components/Navbar/index'
-
+import Tabbar from '@/components/Tabbar/index'
 
 const Index: React.SFC<any> = () => {
     const getNav = () => {
@@ -15,17 +15,22 @@ const Index: React.SFC<any> = () => {
         )
     }
 
+    const getBottomNav = () => (<Tabbar />)
+
     const content = () => {
-        return <React.Fragment>{getNav()}</React.Fragment>
+        // Toast.hide()
+        return <React.Fragment>
+        {getNav()}
+        {getBottomNav()}
+        </React.Fragment>
     }
 
     return (
         <Query
             query={QUERY}
-            // variables={{currency: "USD"}}
         >
             {({ loading, error, data }) => {
-                if (loading) return <p>Loading...</p>
+                // if (loading) return <div>Loading...</div>
                 if (error) return <p>Error :(</p>
                 return content()
             }}

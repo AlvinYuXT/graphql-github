@@ -19,7 +19,7 @@ const Index: React.SFC<any> = props => {
     const renderBody = (desc: string, extra: string) => {
         return (
             <React.Fragment>
-                <div>{desc}</div>
+                <div dangerouslySetInnerHTML={{__html: desc}} />
                 <p>{renderExtra(extra)}</p>
             </React.Fragment>
         )
@@ -28,7 +28,7 @@ const Index: React.SFC<any> = props => {
         console.log(row, 'row')
         return (
             <div>
-                <span>{row.languages.nodes[0] && row.languages.nodes[0].name}</span>
+                <span>{row.primaryLanguage && row.primaryLanguage.name}</span>
                 &nbsp;&nbsp;&nbsp;&nbsp;
                 <span>
                     stars:
@@ -42,7 +42,7 @@ const Index: React.SFC<any> = props => {
             <Card>
                 <Card.Header title={rowData.name} />
                 <Card.Body>
-                    {renderBody(rowData.description, rowData.updatedAt)}
+                    {renderBody(rowData.descriptionHTML, rowData.updatedAt)}
                 </Card.Body>
                 <Card.Footer content={renderCardFooter(rowData)} />
             </Card>
@@ -57,6 +57,8 @@ const Index: React.SFC<any> = props => {
             renderFooter={() => renderFooter()}
             renderRow={renderRow}
             initialListSize={20}
+            onEndReachedThreshold={10}
+            onEndReached={onEndReached}
             onScroll={() => {
                 console.log('scroll')
             }}

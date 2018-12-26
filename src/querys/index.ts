@@ -1,35 +1,40 @@
 import gql from 'graphql-tag'
 
-export const getLoginUser = gql`
-    query {
-        viewer {
-            login
+export const repos = gql`
+    fragment repository on Repository {
+        id
+        name
+        url
+        descriptionHTML
+        primaryLanguage {
+            name
         }
+        owner {
+            login
+            url
+        }
+        stargazers {
+            totalCount
+        }
+        viewerHasStarred
+        watchers {
+            totalCount
+        }
+        viewerSubscription
     }
 `
 
+
 export const getViewerRepos = gql`
-    query($offset: Int = 10) {
+    query($size: Int = 10) {
         viewer {
             login
-            repositories(first: $offset) {
+            repositories(first: $size) {
                 nodes {
-                    description
-                    projectsUrl
-                    name
-                    updatedAt
-                    stargazers {
-                        totalCount
-                    }
-                    languages(first: 1) {
-                        nodes {
-                            name
-                        }
-                    }
+                    ...repository
                 }
             }
         }
     }
+    ${repos}
 `
-
-// export const getRepos = gql``

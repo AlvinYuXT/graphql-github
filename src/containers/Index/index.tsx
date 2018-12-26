@@ -6,13 +6,14 @@ import Navbar from '@/components/Navbar/index'
 import Tabbar from '@/components/Tabbar/index'
 import ListView from '@/components/ListView/index'
 
-const Index: React.SFC<any> = () => {
+const Index: React.SFC<any> = (props) => {
     const renderNav = () => <Navbar title={'github'} />
-
     const renderBottomNav = () => <Tabbar />
-
     const renderView = (data: any) => {
-        return <ListView dataSource={data.viewer.repositories.nodes} />
+        const onEndReached = () => {
+           
+        }
+        return <ListView dataSource={data.viewer.repositories.nodes} onEndReached={onEndReached}/>
     }
 
     const content = (data: any) => {
@@ -27,11 +28,12 @@ const Index: React.SFC<any> = () => {
     }
 
     return (
-        <Query query={QUERY} variables={{ offset: 10 }}>
-            {({ loading, error, data }) => {
-                // if (loading) return <div>Loading...</div>
+        <Query query={QUERY} variables={{ size: 10 }}>
+            {({ loading, error, data, client }) => {
                 if (error) return <p>Error :(</p>
-                if (Object.keys(data).length > 0) return content(data)
+                if (Object.keys(data).length > 0) {
+                    return content(data)
+                }
                 return null
             }}
         </Query>

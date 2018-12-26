@@ -1,38 +1,38 @@
 import * as React from 'react'
 import { Query } from 'react-apollo'
-import { Toast } from 'antd-mobile'
 
-import { test as QUERY } from '../../querys/index'
+import { getViewerRepos as QUERY } from '../../querys/index'
 import Navbar from '@/components/Navbar/index'
 import Tabbar from '@/components/Tabbar/index'
+import ListView from '@/components/ListView/index'
 
 const Index: React.SFC<any> = () => {
-    const getNav = () => {
+    const renderNav = () => <Navbar title={'github'} />
+
+    const renderBottomNav = () => <Tabbar />
+
+    const renderView = (data: any) => {
+        return <ListView dataSource={data.viewer.repositories.nodes} />
+    }
+
+    const content = (data: any) => {
+        // Toast.hide()
         return (
-            <Navbar
-                title={'github'}
-            />
+            <React.Fragment>
+                {renderNav()}
+                {renderView(data)}
+                {renderBottomNav()}
+            </React.Fragment>
         )
     }
 
-    const getBottomNav = () => (<Tabbar />)
-
-    const content = () => {
-        // Toast.hide()
-        return <React.Fragment>
-        {getNav()}
-        {getBottomNav()}
-        </React.Fragment>
-    }
-
     return (
-        <Query
-            query={QUERY}
-        >
+        <Query query={QUERY} variables={{ offset: 10 }}>
             {({ loading, error, data }) => {
                 // if (loading) return <div>Loading...</div>
                 if (error) return <p>Error :(</p>
-                return content()
+                if (Object.keys(data).length > 0) return content(data)
+                return null
             }}
         </Query>
     )

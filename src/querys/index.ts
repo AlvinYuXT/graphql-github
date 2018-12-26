@@ -8,13 +8,24 @@ export const getLoginUser = gql`
     }
 `
 
-export const test = gql`
-    query {
+export const getViewerRepos = gql`
+    query($offset: Int = 10) {
         viewer {
             login
-            repositories(last: 10) {
+            repositories(first: $offset) {
                 nodes {
                     description
+                    projectsUrl
+                    name
+                    updatedAt
+                    stargazers {
+                        totalCount
+                    }
+                    languages(first: 1) {
+                        nodes {
+                            name
+                        }
+                    }
                 }
             }
         }

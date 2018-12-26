@@ -7,7 +7,8 @@ export interface Loading extends Loadable.LoadingComponentProps {}
 
 const Index: React.SFC<Loading> = props => {
     const showError = (error: any) => {
-        return <div>{error}</div>
+        console.log(error)
+        return (<div>{JSON.stringify(error)}</div>)
     }
 
     const showLoading = () => {
@@ -17,9 +18,8 @@ const Index: React.SFC<Loading> = props => {
 
     return (
         <div styleName="loading-container">
-            {/* {props.error && showError(props.error)}
-            {props.isLoading && showLoading()} */}
-            {showLoading()}
+            {props.error && showError(props.error)}
+            {props.isLoading && showLoading()}
         </div>
     )
 }

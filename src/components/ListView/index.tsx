@@ -25,7 +25,6 @@ const Index: React.SFC<any> = props => {
         )
     }
     const renderCardFooter = (row: any) => {
-        console.log(row, 'row')
         return (
             <div>
                 <span>{row.primaryLanguage && row.primaryLanguage.name}</span>
